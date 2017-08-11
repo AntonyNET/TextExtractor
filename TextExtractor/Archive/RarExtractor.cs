@@ -30,11 +30,7 @@
                     rarEntry.WriteTo(entryStream);
                     entryStream.Position = 0;
 
-                    var document = new RawDocument
-                                       {
-                                           FileName = Path.GetFileName(rarEntry.FilePath),
-                                           Data = entryStream.ToArray()
-                                       };
+                    var document = new RawDocument(Path.GetFileName(rarEntry.FilePath), entryStream.ToArray());
 
                     archivedDocuments.Add(document);
                 }

@@ -28,11 +28,7 @@
 
                             entryStream.Position = 0;
 
-                            var document = new RawDocument
-                                               {
-                                                   FileName = zipEntry.Name,
-                                                   Data = entryStream.ToArray()
-                                               };
+                            var document = new RawDocument(zipEntry.Name, entryStream.ToArray());
 
                             archivedDocuments.Add(document);
                         }

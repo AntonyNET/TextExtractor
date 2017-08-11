@@ -47,7 +47,7 @@
             _contentExtractor.Setup(x => x.Extract(It.IsAny<Stream>())).Returns(() => "some content");
 
             _documentExtractor.AddContentExtractor(extension, _contentExtractor.Object);
-            _documentExtractor.GetContent(new RawDocument {FileName = extension, Data = new byte[0]});
+            _documentExtractor.GetContent(new RawDocument (extension, new byte[0]));
 
             Assert.True(_documentExtractor.AllowedExtensions.Contains(extension));
             _contentExtractor.Verify(x => x.Extract(It.IsAny<Stream>()), Times.Once);
@@ -62,7 +62,7 @@
 
             _documentExtractor.AddContentExtractor(extension, _contentExtractor.Object);
 
-            Assert.Throws<NotSupportedException>(() => _documentExtractor.GetContent(new RawDocument {FileName = ".yyy", Data = new byte[0]}));
+            Assert.Throws<NotSupportedException>(() => _documentExtractor.GetContent(new RawDocument(".yyy", new byte[0])));
             _contentExtractor.Verify(x => x.Extract(It.IsAny<Stream>()), Times.Never);
         }
 
@@ -76,7 +76,7 @@
             _documentExtractor.AddContentExtractor(extension, _contentExtractor.Object);
             _documentExtractor.AddContentExtractor(extension, _contentExtractor2.Object);
 
-            var content = _documentExtractor.GetContent(new RawDocument {FileName = extension, Data = new byte[0]});
+            var content = _documentExtractor.GetContent(new RawDocument (extension, new byte[0]));
 
             _contentExtractor.Verify(x => x.Extract(It.IsAny<Stream>()), Times.Once);
             _contentExtractor2.Verify(x => x.Extract(It.IsAny<Stream>()), Times.Never);
@@ -94,7 +94,7 @@
             _documentExtractor.AddContentExtractor(extension, _contentExtractor.Object);
             _documentExtractor.AddContentExtractor(extension, _contentExtractor2.Object);
 
-            var content = _documentExtractor.GetContent(new RawDocument {FileName = extension, Data = new byte[0]});
+            var content = _documentExtractor.GetContent(new RawDocument (extension, new byte[0]));
 
             _contentExtractor.Verify(x => x.Extract(It.IsAny<Stream>()), Times.Once);
             _contentExtractor2.Verify(x => x.Extract(It.IsAny<Stream>()), Times.Once);
