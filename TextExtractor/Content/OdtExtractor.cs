@@ -6,6 +6,9 @@
     using System.Linq;
     using System.Xml.Linq;
 
+    /// <summary>
+    ///     Экстрактор текста из файлов .odt
+    /// </summary>
     public class OdtExtractor : IContentExtractor
     {
         private const string ContentFileName = "content.xml";

@@ -1,4 +1,4 @@
-namespace TextExtractor.Content.Doc
+п»їnamespace TextExtractor.Content.Doc
 {
     using System;
     using System.Collections.Generic;
@@ -8,6 +8,9 @@ namespace TextExtractor.Content.Doc
     using System.Text;
     using Extensions;
 
+    /// <summary>
+    ///     Р­РєСЃС‚СЂР°РєС‚РѕСЂ С‚РµРєСЃС‚Р° РёР· Р±РёРЅР°СЂРЅС‹С… С„Р°Р№Р»РѕРІ .doc
+    /// </summary>
     public class DocExtractor : CBFExtractor, IContentExtractor
     {
         public string Extract(Stream stream)
@@ -33,7 +36,7 @@ namespace TextExtractor.Content.Doc
 
             for (i = 0; i < pieceDescriptors.Count; i++)
             {
-                // Получаем слово со смещением и флагом компрессии
+                // РџРѕР»СѓС‡Р°РµРј СЃР»РѕРІРѕ СЃРѕ СЃРјРµС‰РµРЅРёРµРј Рё С„Р»Р°РіРѕРј РєРѕРјРїСЂРµСЃСЃРёРё
                 var fcValue = pieceDescriptors[i].ReadInt32(2);
 
                 var isANSI = (fcValue & 0x40000000) == 0x40000000;
@@ -125,15 +128,15 @@ namespace TextExtractor.Content.Doc
             {
                 var cd = text.SkipAndTake(i, 2);
 
-                // Если верхний байт нулевой, то перед нами ANSI
+                // Р•СЃР»Рё РІРµСЂС…РЅРёР№ Р±Р°Р№С‚ РЅСѓР»РµРІРѕР№, С‚Рѕ РїРµСЂРµРґ РЅР°РјРё ANSI
                 if (cd[1] == 0)
                 {
-                    // В случае, если ASCII-значение нижнего байта выше 32, то пишем как есть.
+                    // Р’ СЃР»СѓС‡Р°Рµ, РµСЃР»Рё ASCII-Р·РЅР°С‡РµРЅРёРµ РЅРёР¶РЅРµРіРѕ Р±Р°Р№С‚Р° РІС‹С€Рµ 32, С‚Рѕ РїРёС€РµРј РєР°Рє РµСЃС‚СЊ.
                     if (cd[0] >= 32)
                         result.Append((char) cd[0]);
 
-                    // В противном случае проверяем символы на внедрћнные команды (список можно
-                    // дополнить и пополнить).
+                    // Р’ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рµ РїСЂРѕРІРµСЂСЏРµРј СЃРёРјРІРѕР»С‹ РЅР° РІРЅРµРґСЂС›РЅРЅС‹Рµ РєРѕРјР°РЅРґС‹ (СЃРїРёСЃРѕРє РјРѕР¶РЅРѕ
+                    // РґРѕРїРѕР»РЅРёС‚СЊ Рё РїРѕРїРѕР»РЅРёС‚СЊ).
                     switch ((int) cd[0])
                     {
                         case 0x0D:
@@ -158,7 +161,7 @@ namespace TextExtractor.Content.Doc
                             break;
                     }
                 }
-                else // Иначе преобразовываем в HTML entity
+                else // РРЅР°С‡Рµ РїСЂРµРѕР±СЂР°Р·РѕРІС‹РІР°РµРј РІ HTML entity
                 {
                     result.Append("&#x");
                     result.Append(cd.ReadInt16(0).ToString("x"));

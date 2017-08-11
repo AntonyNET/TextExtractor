@@ -8,6 +8,9 @@
     using System.Text;
     using System.Text.RegularExpressions;
 
+    /// <summary>
+    ///     Экстрактор текста из файлов .rtf - текстовый формат.
+    /// </summary>
     public class RtfExtractor : IContentExtractor
     {
         private readonly Stack<Dictionary<string, object>> _groupsStack = new Stack<Dictionary<string, object>>();

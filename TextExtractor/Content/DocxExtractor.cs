@@ -1,10 +1,13 @@
-namespace TextExtractor.Content
+﻿namespace TextExtractor.Content
 {
     using System.IO;
     using System.IO.Compression;
     using System.Linq;
     using System.Xml.Linq;
 
+    /// <summary>
+    ///     Экстрактор текста из файлов .docx
+    /// </summary>
     public class DocxExtractor : IContentExtractor
     {
         private const string DocumentEntryName = @"word/document.xml";

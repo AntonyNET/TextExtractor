@@ -56,7 +56,7 @@
                 var extension = GetExtension(downloadFile.FileName);
 
                 if (_fileExtensions.ContainsKey(extension) == false)
-                    return string.Empty;
+                    throw new NotSupportedException(extension);
 
                 foreach (var contentExtractor in _fileExtensions[extension])
                 {
@@ -69,7 +69,7 @@
                     }
                 }
 
-                throw new NotImplementedException();
+                throw new Exception("Не удалось получить текст из файла");
             }
         }
 
@@ -125,7 +125,7 @@
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Can't define extension in file {fileName}", ex);
+                throw new ArgumentException($"Can't define extension for file {fileName}", ex);
             }
         }
     }

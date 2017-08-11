@@ -1,4 +1,4 @@
-namespace TextExtractor.Archive
+﻿namespace TextExtractor.Archive
 {
     using System;
     using System.Collections.Generic;
@@ -21,12 +21,12 @@ namespace TextExtractor.Archive
 
         public IArchiveExtractor GetExtractor(string archiveFileName)
         {
-            var extension = Path.GetExtension(archiveFileName);
+            var extension = Path.GetExtension(archiveFileName)?.ToLowerInvariant();
 
-            if (extension == null || _archiveExtractors.ContainsKey(extension.ToLowerInvariant()) == false)
+            if (extension == null || _archiveExtractors.ContainsKey(extension) == false)
                 throw new InvalidOperationException($"Can not found extractor for archive \"{archiveFileName}\"");
 
-            return _archiveExtractors[extension.ToLowerInvariant()]();
+            return _archiveExtractors[extension]();
         }
     }
 }

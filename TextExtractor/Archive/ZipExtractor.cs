@@ -1,9 +1,12 @@
-namespace TextExtractor.Archive
+﻿namespace TextExtractor.Archive
 {
     using System.Collections.Generic;
     using System.IO;
     using System.IO.Compression;
 
+    /// <summary>
+    ///     Распаковщик архивов .zip
+    /// </summary>
     public class ZipExtractor : IArchiveExtractor
     {
         public IList<RawDocument> Extract(Stream stream)

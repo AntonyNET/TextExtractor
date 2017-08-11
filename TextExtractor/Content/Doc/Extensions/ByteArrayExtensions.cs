@@ -1,7 +1,10 @@
-namespace TextExtractor.Content.Doc.Extensions
+﻿namespace TextExtractor.Content.Doc.Extensions
 {
     using System;
 
+    /// <summary>
+    ///     Расширения для работы с массивом байтов
+    /// </summary>
     internal static class ByteArrayExtensions
     {
         public static short ReadInt16(this byte[] bytes, int position)

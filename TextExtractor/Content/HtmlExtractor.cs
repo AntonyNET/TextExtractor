@@ -7,6 +7,9 @@
     using System.Xml.Linq;
     using HtmlAgilityPack;
 
+    /// <summary>
+    ///     Экстрактор текста из файлов .html
+    /// </summary>
     public class HtmlExtractor : IContentExtractor
     {
         public string Extract(Stream stream)

@@ -5,7 +5,7 @@
     using System.Text;
 
     /// <summary>
-    /// 
+    ///     Экстрактор текста из файлов .pdf
     /// </summary>
     public class PdfExtractor : IContentExtractor
     {

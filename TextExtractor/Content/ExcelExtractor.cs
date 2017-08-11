@@ -7,6 +7,9 @@
     using System.Text.RegularExpressions;
     using System.Xml.Linq;
 
+    /// <summary>
+    ///     Экстрактор текста из файлов .xlsx
+    /// </summary>
     public class ExcelExtractor : IContentExtractor
     {
         private const string SheetEntryName = @"xl/worksheets/sheet(\d+)\.xml";

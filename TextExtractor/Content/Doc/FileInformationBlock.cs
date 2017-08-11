@@ -1,4 +1,4 @@
-namespace TextExtractor.Content.Doc
+﻿namespace TextExtractor.Content.Doc
 {
     using Extensions;
 
