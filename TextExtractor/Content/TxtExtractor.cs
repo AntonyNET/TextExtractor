@@ -1,7 +1,6 @@
-﻿namespace TextExtractor.Extractor
+﻿namespace TextExtractor.Content
 {
     using System.IO;
-    using Contract;
 
     public class TxtExtractor : IContentExtractor
     {

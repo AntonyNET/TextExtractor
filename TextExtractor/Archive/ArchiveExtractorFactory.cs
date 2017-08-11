@@ -1,10 +1,10 @@
-namespace TextExtractor.Extractor.Archive
+namespace TextExtractor.Archive
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
 
-    public class ArchiveExtractorFactory
+    public class ArchiveExtractorFactory : IArchiveExtractorFactory
     {
         private readonly Dictionary<string, Func<IArchiveExtractor>> _archiveExtractors = new Dictionary<string, Func<IArchiveExtractor>>
                                                                                               {

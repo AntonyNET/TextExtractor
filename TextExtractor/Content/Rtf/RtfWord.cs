@@ -1,4 +1,4 @@
-namespace TextExtractor.Extractor.Rtf
+namespace TextExtractor.Content.Rtf
 {
     internal class RtfWord
     {

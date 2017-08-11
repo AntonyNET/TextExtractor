@@ -4,32 +4,40 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Text.RegularExpressions;
-    using Contract;
-    using Extractor;
-    using Extractor.Archive;
-    using Extractor.Doc;
-    using Extractor.Rtf;
+    using Archive;
+    using Content;
+    using Content.Doc;
+    using Content.Rtf;
 
     public class DocumentExtractor : IDocumentExtractor
     {
         private readonly ArchiveExtractorFactory _archiveExtractorFactory = new ArchiveExtractorFactory();
 
-        private readonly Dictionary<string, Func<IContentExtractor>> _fileExtensions = new Dictionary<string, Func<IContentExtractor>>
-                                                                                           {
-                                                                                               {".xls", () => new ExcelExtractor()},
-                                                                                               {".xlsx", () => new ExcelExtractor()},
-                                                                                               {".docx", () => new CompositeExtractor(new DocxExtractor())},
-                                                                                               {".doc", () => new CompositeExtractor(new DocExtractor(),
-                                                                                                                                     new HtmlExtractor())},
-                                                                                               {".txt", () => new CompositeExtractor(new TxtExtractor())},
-                                                                                               {".rtf", () => new CompositeExtractor(new RtfExtractor(),
-                                                                                                                                     new DocExtractor())},
-                                                                                               {".odt", () => new CompositeExtractor(new OdtExtractor())},
-                                                                                               {".htm", () => new HtmlExtractor()},
-                                                                                               {".html", () => new HtmlExtractor()},
-                                                                                               {".pdf", () => new PdfExtractor()},
-                                                                                           };
+        private readonly Dictionary<string, ICollection<IContentExtractor>> _fileExtensions = new Dictionary<string, ICollection<IContentExtractor>>
+                                                                                                  {
+                                                                                                          {".xls", new List<IContentExtractor> {new ExcelExtractor()}},
+                                                                                                          {".xlsx", new List<IContentExtractor> {new ExcelExtractor()}},
+                                                                                                          {".docx", new List<IContentExtractor> {new DocxExtractor()}},
+                                                                                                          {
+                                                                                                              ".doc", new List<IContentExtractor>
+                                                                                                                          {
+                                                                                                                              new DocExtractor(),
+                                                                                                                              new HtmlExtractor()
+                                                                                                                          }
+                                                                                                          },
+                                                                                                          {".txt", new List<IContentExtractor> {new TxtExtractor()}},
+                                                                                                          {
+                                                                                                              ".rtf", new List<IContentExtractor>
+                                                                                                                          {
+                                                                                                                              new RtfExtractor(),
+                                                                                                                              new DocExtractor()
+                                                                                                                          }
+                                                                                                          },
+                                                                                                          {".odt", new List<IContentExtractor> {new OdtExtractor()}},
+                                                                                                          {".htm", new List<IContentExtractor> {new HtmlExtractor()}},
+                                                                                                          {".html", new List<IContentExtractor> {new HtmlExtractor()}},
+                                                                                                          {".pdf", new List<IContentExtractor> {new PdfExtractor()}},
+                                                                                                  };
 
         public IEnumerable<string> AllowedExtensions => _fileExtensions.Keys.Union(_archiveExtractorFactory.SupportedExtensions);
 
@@ -50,20 +58,38 @@
                 if (_fileExtensions.ContainsKey(extension) == false)
                     return string.Empty;
 
-                var content = _fileExtensions[extension]().Extract(stream);
+                foreach (var contentExtractor in _fileExtensions[extension])
+                {
+                    try
+                    {
+                        return contentExtractor.Extract(stream);
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
 
-                return RemoveUrls(content);
+                throw new NotImplementedException();
             }
-        }
-
-        public string RemoveUrls(string content)
-        {
-            return Regex.Replace(content, @"((ftp|ftps|http|https):\/\/)?(www\.)?([a-z0-9\-]+?\.)+[a-z]{2,5} ((\/[a-z0-9\-%]+)+)?(\?( [a-zA-Z0-9\:\/\?#\[\]@!\$&'\(\)\*\+,;=\-._~]+?=[a-zA-Z0-9\:\/\?#\[\]@!\$&'\(\)\*\+,;=\-._~]+&?)+)?", " ", RegexOptions.IgnorePatternWhitespace);
         }
 
         public bool IsArchive(string fileName)
         {
             return _archiveExtractorFactory.IsSupported(GetExtension(fileName));
+        }
+
+        public void AddContentExtractor(string extension, IContentExtractor newExtractor)
+        {
+            if (string.IsNullOrEmpty(extension) || extension.StartsWith(".") == false)
+                throw new ArgumentException(nameof(extension));
+
+            if (newExtractor == null)
+                throw new NullReferenceException(nameof(newExtractor));
+
+            if (_fileExtensions.ContainsKey(extension) == false)
+                _fileExtensions.Add(extension, new List<IContentExtractor>());
+
+            _fileExtensions[extension].Add(newExtractor);
         }
 
         private IEnumerable<RawDocument> GetExtractedFiles(RawDocument document)
@@ -95,9 +121,7 @@
         {
             try
             {
-                var extension = Path.GetExtension(fileName);
-
-                return extension?.ToLowerInvariant();
+                return Path.GetExtension(fileName)?.ToLowerInvariant();
             }
             catch (Exception ex)
             {

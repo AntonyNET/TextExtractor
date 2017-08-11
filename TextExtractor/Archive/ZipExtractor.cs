@@ -1,4 +1,4 @@
-namespace TextExtractor.Extractor.Archive
+namespace TextExtractor.Archive
 {
     using System.Collections.Generic;
     using System.IO;
@@ -9,7 +9,7 @@ namespace TextExtractor.Extractor.Archive
         public IList<RawDocument> Extract(Stream stream)
         {
             var archivedDocuments = new List<RawDocument>();
-
+            
             using (var zip = new ZipArchive(stream))
             {
                 foreach (var zipEntry in zip.Entries)

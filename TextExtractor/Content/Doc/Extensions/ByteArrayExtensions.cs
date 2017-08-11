@@ -1,4 +1,4 @@
-namespace TextExtractor.Extractor.Doc.Extensions
+namespace TextExtractor.Content.Doc.Extensions
 {
     using System;
 

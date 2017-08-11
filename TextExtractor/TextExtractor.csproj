@@ -57,27 +57,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contract\IContentExtractor.cs" />
+    <Compile Include="IContentExtractor.cs" />
     <Compile Include="DocumentExtractor.cs" />
-    <Compile Include="Extractor\Archive\ArchiveExtractorFactory.cs" />
-    <Compile Include="Extractor\Archive\IArchiveExtractor.cs" />
-    <Compile Include="Extractor\Archive\RarExtractor.cs" />
-    <Compile Include="Extractor\Archive\ZipExtractor.cs" />
-    <Compile Include="Extractor\CompositeExtractor.cs" />
-    <Compile Include="Extractor\DocxExtractor.cs" />
-    <Compile Include="Extractor\Doc\CBFExtractor.cs" />
-    <Compile Include="Extractor\Doc\DocExtractor.cs" />
-    <Compile Include="Extractor\Doc\Extensions\ByteArrayExtensions.cs" />
-    <Compile Include="Extractor\Doc\FatDirectory.cs" />
-    <Compile Include="Extractor\Doc\FileInformationBlock.cs" />
-    <Compile Include="Extractor\ExcelExtractor.cs" />
-    <Compile Include="Extractor\HtmlExtractor.cs" />
-    <Compile Include="Extractor\OdtExtractor.cs" />
-    <Compile Include="Extractor\PdfExtractor.cs" />
-    <Compile Include="Extractor\Rtf\RtfExtractor.cs" />
-    <Compile Include="Extractor\Rtf\RtfWord.cs" />
-    <Compile Include="Extractor\Rtf\WordType.cs" />
-    <Compile Include="Extractor\TxtExtractor.cs" />
+    <Compile Include="Archive\ArchiveExtractorFactory.cs" />
+    <Compile Include="Archive\IArchiveExtractor.cs" />
+    <Compile Include="Archive\IArchiveExtractorFactory.cs" />
+    <Compile Include="Archive\RarExtractor.cs" />
+    <Compile Include="Archive\ZipExtractor.cs" />
+    <Compile Include="Content\CompositeExtractor.cs" />
+    <Compile Include="Content\DocxExtractor.cs" />
+    <Compile Include="Content\Doc\CBFExtractor.cs" />
+    <Compile Include="Content\Doc\DocExtractor.cs" />
+    <Compile Include="Content\Doc\Extensions\ByteArrayExtensions.cs" />
+    <Compile Include="Content\Doc\FatDirectory.cs" />
+    <Compile Include="Content\Doc\FileInformationBlock.cs" />
+    <Compile Include="Content\ExcelExtractor.cs" />
+    <Compile Include="Content\HtmlExtractor.cs" />
+    <Compile Include="Content\OdtExtractor.cs" />
+    <Compile Include="Content\PdfExtractor.cs" />
+    <Compile Include="Content\Rtf\RtfExtractor.cs" />
+    <Compile Include="Content\Rtf\RtfWord.cs" />
+    <Compile Include="Content\Rtf\WordType.cs" />
+    <Compile Include="Content\TxtExtractor.cs" />
     <Compile Include="IDocumentExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RawDocument.cs" />
@@ -85,6 +86,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,4 +1,4 @@
-namespace TextExtractor.Extractor.Doc
+namespace TextExtractor.Content.Doc
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,6 @@ namespace TextExtractor.Extractor.Doc
     using System.Linq;
     using System.Net;
     using System.Text;
-    using Contract;
     using Extensions;
 
     public class DocExtractor : CBFExtractor, IContentExtractor

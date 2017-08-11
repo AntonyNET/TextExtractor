@@ -1,4 +1,4 @@
-﻿namespace TextExtractor.Contract
+﻿namespace TextExtractor
 {
     using System.IO;
 

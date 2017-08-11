@@ -1,9 +1,8 @@
-﻿namespace TextExtractor.Extractor
+﻿namespace TextExtractor.Content
 {
     using System;
     using System.IO;
     using System.Text;
-    using Contract;
 
     /// <summary>
     /// 

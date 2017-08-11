@@ -1,4 +1,4 @@
-﻿namespace TextExtractor.Extractor.Rtf
+﻿namespace TextExtractor.Content.Rtf
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,6 @@
     using System.Net;
     using System.Text;
     using System.Text.RegularExpressions;
-    using Contract;
 
     public class RtfExtractor : IContentExtractor
     {

@@ -1,9 +1,8 @@
-﻿namespace TextExtractor.Extractor
+﻿namespace TextExtractor.Content
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using Contract;
 
     public class CompositeExtractor : IContentExtractor
     {

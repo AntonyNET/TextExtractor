@@ -1,11 +1,10 @@
-﻿namespace TextExtractor.Extractor
+﻿namespace TextExtractor.Content
 {
     using System.IO;
     using System.Linq;
     using System.Text;
     using System.Web;
     using System.Xml.Linq;
-    using Contract;
     using HtmlAgilityPack;
 
     public class HtmlExtractor : IContentExtractor

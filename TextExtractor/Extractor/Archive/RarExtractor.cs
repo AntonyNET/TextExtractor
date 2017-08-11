@@ -1,4 +1,4 @@
-namespace TextExtractor.Extractor.Archive
+namespace TextExtractor.Archive
 {
     using System.Collections.Generic;
     using System.IO;
