@@ -11,33 +11,53 @@
 
     public class DocumentExtractor : IDocumentExtractor
     {
-        private readonly ArchiveExtractorFactory _archiveExtractorFactory = new ArchiveExtractorFactory();
+        public static IDocumentExtractor Default()
+        {
+            var extractors = new Dictionary<string, ICollection<IContentExtractor>>
+                                  {
+                                      {".xls", new List<IContentExtractor> {new ExcelExtractor()}},
+                                      {".xlsx", new List<IContentExtractor> {new ExcelExtractor()}},
+                                      {".docx", new List<IContentExtractor> {new DocxExtractor()}},
+                                      {
+                                          ".doc", new List<IContentExtractor>
+                                                      {
+                                                          new DocExtractor(),
+                                                          new HtmlExtractor()
+                                                      }
+                                      },
+                                      {".txt", new List<IContentExtractor> {new TxtExtractor()}},
+                                      {
+                                          ".rtf", new List<IContentExtractor>
+                                                      {
+                                                          new RtfExtractor(),
+                                                          new DocExtractor()
+                                                      }
+                                      },
+                                      {".odt", new List<IContentExtractor> {new OdtExtractor()}},
+                                      {".htm", new List<IContentExtractor> {new HtmlExtractor()}},
+                                      {".html", new List<IContentExtractor> {new HtmlExtractor()}},
+                                      {".pdf", new List<IContentExtractor> {new PdfExtractor()}},
+                                  };
 
-        private readonly Dictionary<string, ICollection<IContentExtractor>> _fileExtensions = new Dictionary<string, ICollection<IContentExtractor>>
-                                                                                                  {
-                                                                                                          {".xls", new List<IContentExtractor> {new ExcelExtractor()}},
-                                                                                                          {".xlsx", new List<IContentExtractor> {new ExcelExtractor()}},
-                                                                                                          {".docx", new List<IContentExtractor> {new DocxExtractor()}},
-                                                                                                          {
-                                                                                                              ".doc", new List<IContentExtractor>
-                                                                                                                          {
-                                                                                                                              new DocExtractor(),
-                                                                                                                              new HtmlExtractor()
-                                                                                                                          }
-                                                                                                          },
-                                                                                                          {".txt", new List<IContentExtractor> {new TxtExtractor()}},
-                                                                                                          {
-                                                                                                              ".rtf", new List<IContentExtractor>
-                                                                                                                          {
-                                                                                                                              new RtfExtractor(),
-                                                                                                                              new DocExtractor()
-                                                                                                                          }
-                                                                                                          },
-                                                                                                          {".odt", new List<IContentExtractor> {new OdtExtractor()}},
-                                                                                                          {".htm", new List<IContentExtractor> {new HtmlExtractor()}},
-                                                                                                          {".html", new List<IContentExtractor> {new HtmlExtractor()}},
-                                                                                                          {".pdf", new List<IContentExtractor> {new PdfExtractor()}},
-                                                                                                  };
+            return new DocumentExtractor(new ArchiveExtractorFactory(), extractors);
+        }
+
+
+        public DocumentExtractor(IArchiveExtractorFactory archiveExtractorFactory)
+        {
+            _archiveExtractorFactory = archiveExtractorFactory;
+            _fileExtensions = new Dictionary<string, ICollection<IContentExtractor>>();
+        }
+
+        private DocumentExtractor(IArchiveExtractorFactory archiveExtractorFactory, Dictionary<string, ICollection<IContentExtractor>> extractors)
+        {
+            _archiveExtractorFactory = archiveExtractorFactory;
+            _fileExtensions = extractors;
+        }
+
+        private readonly IArchiveExtractorFactory _archiveExtractorFactory;
+
+        private readonly Dictionary<string, ICollection<IContentExtractor>> _fileExtensions;
 
         public IEnumerable<string> AllowedExtensions => _fileExtensions.Keys.Union(_archiveExtractorFactory.SupportedExtensions);
 
