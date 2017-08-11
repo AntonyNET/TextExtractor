@@ -3,6 +3,7 @@
     using System;
     using System.IO;
     using System.Linq;
+    using System.Text;
     using Archive;
     using Moq;
     using NUnit.Framework;
@@ -99,6 +100,31 @@
             _contentExtractor2.Verify(x => x.Extract(It.IsAny<Stream>()), Times.Once);
             Assert.AreEqual("some content", content);
 
+        }
+
+        [Test]
+        public void SampleOfWork()
+        {
+            var documentExtractor = DocumentExtractor.Default();
+            var content = string.Empty;
+            var fileName = @"C:\1.rar";
+            
+            if (documentExtractor.IsArchive(fileName))
+            {
+                var archivedFiles = documentExtractor.GetArchivedFiles(new RawDocument(fileName, File.ReadAllBytes(fileName)));
+                var contentBuilder = new StringBuilder();
+
+                foreach (var archivedFile in archivedFiles)
+                    contentBuilder.AppendLine(documentExtractor.GetContent(archivedFile));
+
+                content = contentBuilder.ToString();
+            }
+            else
+            {
+                content = documentExtractor.GetContent(new RawDocument(fileName, File.ReadAllBytes(fileName)));
+            }
+
+            Console.WriteLine("Extracted content: {0}", content);
         }
     }
 }
