@@ -12,7 +12,7 @@
 
 Использование:
 
-var documentExtractor = DocumentExtractor.Default();
+		var documentExtractor = DocumentExtractor.Default();
             var content = string.Empty;
             var fileName = @"C:\1.rar";
             
