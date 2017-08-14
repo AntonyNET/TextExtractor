@@ -27,6 +27,13 @@
         string GetContent(RawDocument downloadFile);
 
         /// <summary>
+        ///     Получение текста из файла
+        /// </summary>
+        /// <param name="filePath">путь до файла, из которого надо извлечь текст</param>
+        /// <returns></returns>
+        string GetContent(string filePath);
+
+        /// <summary>
         ///     Определяет является ли файл архивом
         /// </summary>
         /// <param name="fileName"></param>

@@ -93,6 +93,30 @@
             }
         }
 
+        public string GetContent(string filePath)
+        {
+            using (var stream = File.OpenRead(filePath))
+            {
+                var extension = GetExtension(filePath);
+
+                if (_fileExtensions.ContainsKey(extension) == false)
+                    throw new NotSupportedException(extension);
+
+                foreach (var contentExtractor in _fileExtensions[extension])
+                {
+                    try
+                    {
+                        return contentExtractor.Extract(stream);
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+
+                throw new Exception("Не удалось получить текст из файла");
+            }
+        }
+
         public bool IsArchive(string fileName)
         {
             return _archiveExtractorFactory.IsSupported(GetExtension(fileName));
